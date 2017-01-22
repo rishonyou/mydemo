@@ -1,0 +1,171 @@
+* {
+	padding:0;
+	margin:0;
+	font-family:SimHei,Arial;
+	color:#666;
+}
+#container {
+	overflow:hidden;
+	width:900px;
+	margin:20px auto;
+	padding-bottom:100px;
+	position:relative;
+	border:1px solid #e4393c;
+	border-left:none;
+	border-top:none;
+	box-shadow:5px 5px 5px #e4393c;
+}
+#redarea,#bluearea{
+	float:left;
+	margin-right:40px;
+	width:386px;
+}
+#redarea{margin-left:30px;}
+#bluearea{width:300px;}
+.redballs{
+	width:386px;
+	height:136px;
+	margin-bottom:40px;
+}
+.blueballs{
+	width:210px;
+	height:136px;
+	margin-bottom:40px;
+}
+.redball,.blueball {
+	width:28px;
+	height:30px;
+	float:left;
+	font-family:SimHei;
+	font-size:17px;
+	font-weight:bold;
+	text-align:center;
+	padding-right:2px;
+	line-height:30px;
+	margin:0 3px 20px 0;
+	border-radius:16px;
+	border:1px solid #ccc;
+
+}
+.redball:hover {
+	cursor:pointer;
+	color:#DC143C!important;
+	border:1px solid #DC143C;
+	background:#fee2e2!important;
+}
+
+	/*红球被选中后的颜色#DC143C，由div的onclick事件触发*/
+.blueball:hover{
+	cursor:pointer;
+	border:1px solid #4169E1;
+	background:#cedefe!important;
+	color:#4169E1;
+}
+
+/*蓝球选中后的颜色为#4169E1，有onclick事件触发*/
+h1{
+	font-size:30px;
+	color:red;
+	margin:30px 0 30px;
+	padding-left:30%;
+}
+h3{
+	font-size:15px;
+	height:20px;
+	margin-bottom:14px;
+	border-bottom:1px dotted #bbb;
+}
+.chose {
+	width:176px;
+	height:25px;
+	margin:0 auto;
+}
+#bluearea .chose {
+	margin-left:0;
+}
+select {
+	width:50px;
+	color:black;
+}
+button {
+	padding:3px 4px;
+	border:1px solid #ccc;
+	border-radius:3px;
+	background:#FFFAF0;
+}
+#redarea button {
+	color:#DC143C;
+}
+#bluearea button {
+	color:#4169E1;
+}	
+button:hover {
+	background:#FFF68F;
+	cursor:pointer;
+}
+#container a{
+	margin-left:10px;
+	font-size:13px;
+}
+#container a:hover {
+	text-decoration:underline;
+	cursor:pointer;
+	color:#666;
+}
+.hori {
+	position:absolute;
+	left:30px;
+	bottom:85px;
+	width:730px;
+	height:2px;
+	border-bottom:1px dotted #bbb;
+}
+
+.commit {
+	float:left;
+	margin-left:110px;
+	width:70px;
+	height:28px;
+	line-height:27px;
+	text-align:center;
+	cursor:pointer;
+	font-size:18px;
+	display:block;
+	background:#eee;
+	border:2px solid #ccc;
+	border-radius:3px;
+	text-decoration:none;
+}
+.commit:hover {
+	background:#e4393c;
+	color:#fff;
+	border:2px solid #e4393c;
+}
+form div span {
+	display:block;
+	width:90px;
+}
+form   {
+	position:absolute;
+	width:83%;
+	left:3%;
+	bottom:10%;
+	font-size:16px;
+	font-weight:bold;
+	height:26px;
+}
+
+.finalred,.finalblue,form span {
+	float:left;
+}
+.finalred{
+	height:60px;
+	width:220px;
+	color:#DC143C;
+	margin-right:20px;
+}
+.finalblue{
+	height:50px;
+	width:220px;
+	color:#4169E1;
+}
