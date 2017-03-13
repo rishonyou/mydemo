@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>图片轮播demo</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+    ul{
+      padding-left: 0;
+    }
+    li{
+      list-style-type: none;
+    }
+    a{
+      text-decoration: none;
+    }
+    .container{
+      margin: 50px auto;
+      padding: 0;
+    }
+    .wrapper{
+      overflow: hidden;
+      width: 800px;
+      height: 300px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .carousel .carousel-img{
+      position: absolute;
+      left: 0;
+      top:0;
+      z-index: 9;
+    }
+
+    .carousel a{
+      display: block;
+      width: 800px;
+      height: 300px;
+      font-size: 0;
+    }
+    .carousel a img{
+      max-width: 100%;
+      height: 100%;
+    }
+    #prev{
+      position: absolute;
+      left: 0;
+      top:135px;
+      padding-left: 20px;
+    }
+    #next{
+      position: absolute;
+      right: 0;
+      top:135px;
+      padding-right: 10px;
+      padding-left: 10px;
+    }
+    #prev,#next{
+      width: 20px;
+      height: 30px;
+      background-color: #c0c0c0;
+      border-radius: 2px;
+      opacity: .2;
+      -ms-filter: Alpha(Opacity=20);
+      filter: Alpha(Opacity=20);
+      cursor: pointer;
+      z-index: 10;
+    }
+    #prev:hover,#next:hover {
+      opacity: .7;
+      -ms-filter: Alpha(Opacity=70);
+      filter: Alpha(Opacity=70);
+    }
+    #prev a,#next a{
+      display: inline-block;
+      width: 12px;
+      height: 22px;
+      margin-top: 4px;
+      background-image: url("images/prev.gif");
+      background-repeat: no-repeat;
+    }
+    #next a{
+      background-image: url("images/next.gif");
+    }
+    .underCtrl{
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 20px;
+      z-index: 10;
+    }
+    #controller{
+      width: 120px;
+      height: 100%;
+      margin: 0 auto;
+    }
+    #controller li{
+      float: left;
+      width: 10px;
+      height: 10px;
+      margin-right: 10px;
+      border: 1px solid transparent;
+      border-radius: 5px;
+      background-color: #f2f2f2;
+      opacity: .4;
+      -ms-filter: Alpha(Opacity=40);
+      filter:Alpha(Opacity=40);
+      cursor: pointer;
+    }
+    #controller li.active,#controller li:hover{
+      opacity: 1;
+      -ms-filter: Alpha(Opacity=100);
+      filter:Alpha(Opacity=100);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="wrapper">
+    <!--控制按钮-->
+    <span id="prev"><a href="javascript:"></a></span>
+    <span id="next"><a href="javascript:"></a></span>
+    <!--轮播图-->
+    <div class="carousel">
+      <div class="carousel-img" style="display: block;"><a href="#"><img src="images/1.png" alt=""></a></div>
+      <div class="carousel-img" style="display: none;"><a href="#"><img src="images/2.png" alt=""></a></div>
+      <div class="carousel-img" style="display: none;"><a href="#"><img src="images/3.png" alt=""></a></div>
+      <div class="carousel-img" style="display: none;"><a href="#"><img src="images/4.png" alt=""></a></div>
+      <div class="carousel-img" style="display: none;"><a href="#"><img src="images/5.png" alt=""></a></div>
+    </div>
+    <div class="underCtrl">
+      <ul id="controller">
+        <li class="active" data-i="0"></li>
+        <li data-i="1"></li>
+        <li data-i="2"></li>
+        <li data-i="3"></li>
+        <li data-i="4"></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<script>
+//初始化
+(function () {
+  var imgs=document.getElementsByClassName("carousel-img");
+  var prevBtn=document.getElementById("prev");
+  var nextBtn=document.getElementById("next");
+  var controller=document.getElementById("controller");
+  var ctrlItems=controller.getElementsByTagName("li");
+  var index=0;
+  var autoTimer=null;
+  var len=imgs.length;
+  var Len=ctrlItems.length;
+
+  //获取元素当前样式
+  function getAttr(obj,attr) {
+    if(obj.currentStyle){
+      return obj.currentStyle[attr];
+    }else{
+      return getComputedStyle(obj,null)[attr];
+    }
+  }
+  //淡入
+ function fadeIn(obj) {
+   var opacity=getAttr(obj,"opacity");
+   /*var filter=getAttr(obj,"filter");
+   //console.log(filter);
+   if(opacity==1||filter==100){
+     return false;
+   }*/
+   var value=10;
+    clearInterval(obj.timer);
+    obj.timer=null;
+    obj.timer=setInterval(function () {
+      var step=20;
+      if (value==100){
+        clearInterval(obj.timer);
+        obj.timer=null;
+      }else {
+        value+=step;
+        obj.style.opacity=value/100;
+        obj.style.filter="Apah(opacity="+value+")";
+        obj.style.display="block";
+      }
+    },5);
+  }
+  //淡出
+  function fadeOut(obj,interval) {
+   var opacity=getAttr(obj,"opacity");
+   //var filter=getAttr(obj,"filter").replace(/\d{2,3}/g," ");
+       /*if(opacity==0||filter==0){
+         return false;
+       }*/
+   var value=100;
+    clearInterval(obj.timer);
+    obj.timer=null;
+    obj.timer=setInterval(function () {
+      var step=20;
+      if (value==0){
+        clearInterval(obj.timer);
+        obj.timer=null;
+      }else {
+        value-=step;
+        obj.style.opacity=value/100;
+        obj.style.filter="Apah(opacity="+value+")";
+        obj.style.display="none";
+      }
+    },interval);
+  }
+  //图片,底边按钮同时切换
+  function swithImg(speed) {
+  if(index==len-1){
+    index=0;
+  }else{
+    index++;
+  }
+  for(var i=0;i<len;i++) {
+    //淡出
+      fadeOut(imgs[i],speed);
+  }
+  //淡入
+      fadeIn(imgs[index]);
+  //底边按钮样式同时切换
+  for(var k=0;k<Len;k++){
+    ctrlItems[k].className=" ";
+  }
+  ctrlItems[index].className="active";
+}
+  //自动播放
+  function autoPlay() {
+    autoTimer=setInterval(function () {
+      swithImg(200);
+    },3000);
+  }
+  autoPlay();
+  //鼠标移动到图上,移到两边按钮上，停止自动播放
+  var carouselDiv=document.getElementsByClassName("carousel")[0];
+      carouselDiv.onmouseover=prevBtn.onmouseover=nextBtn.onmouseover=function () {
+           clearInterval(autoTimer);
+      };
+      carouselDiv.onmouseout=prevBtn.onmouseout=nextBtn.onmouseout=function () {
+          autoPlay();
+    };
+    //为两边按钮添加点击事件
+    prevBtn.onclick=function () {
+      if(index==0){
+        index=len-1;
+      }else{
+        index--;
+      }
+      for(var i=0;i<len;i++) {
+        //淡出
+        fadeOut(imgs[i],10);
+      }
+      //淡入
+      fadeIn(imgs[index]);
+      for(var k=0;k<Len;k++){
+       ctrlItems[k].className=" ";
+       }
+       ctrlItems[index].className="active";
+    };
+    nextBtn.onclick=function () {
+      swithImg(10);
+    };
+
+    //为底部控制器添加事件
+      //定义去除当前点击的控制器以外的控制器active样式函数
+    function removeAttr(arr,currIndex) {
+      for(var i=0;i<arr.length;i++){
+        arr[i].className=" ";
+      }
+      arr[currIndex].className="active";
+    }
+    //为当前点击的控制器添加onclick事件
+    controller.onclick=function (e) {
+      var e=window.event||arguments[0];
+      var datai;
+      if(e.target){
+        datai=e.target.dataset.i;
+      }else{
+        datai=e.srcElement.dataset.i;
+      }
+      removeAttr(ctrlItems,datai);
+      clearInterval(autoTimer);
+      if(datai){
+        for(var i=0;i<len;i++){
+          fadeOut(imgs[i]);
+        }
+        fadeIn(imgs[datai]);
+      }
+    }
+})();
+
+</script>
+
+
+</body>
+
+</html>
